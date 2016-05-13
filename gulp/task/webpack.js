@@ -4,13 +4,21 @@ var webpackStream = require('webpack-stream');
 var webpack = webpackStream.webpack;
 var webpackConf = require('../conf/webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var _ = require('lodash');
+var R = require('ramda');
 var src = require('../conf/src');
+var R = require('ramda');
+var examples = R.values(require('../conf/examples'));
+
 
 gulp.task('webpack:build', build(webpackConf));
 function build(conf){
     return function(){
-        conf = _.clone(conf);
+
+        var exampleIndexes = examples.map(example => `${example}/index.html`);
+        gulp.src(exampleIndexes, {base: './examples'})
+          .pipe(gulp.dest(src.dist + '/examples'))
+
+        conf = R.clone(conf);
         conf.plugins = conf.plugins.concat(
           new webpack.DefinePlugin({
               "process.env": {
@@ -24,19 +32,41 @@ function build(conf){
 
         return gulp.src(src.jsMain)
           .pipe(webpackStream(conf))
-          .pipe(gulp.dest(src.dist));
+          .pipe(gulp.dest(src.dist + '/dist'));
     };
+}
 
+gulp.task ('webpack:build-dev', buildDev(webpackConf));
+function buildDev(conf){
+    return function(){
+        conf = R.clone(conf);
+        conf.devtool = 'source-map';
+        conf.plugins = conf.plugins.concat(
+          new webpack.DefinePlugin({
+              "process.env": {
+                  // This has effect on the react lib size
+                  "NODE_ENV": JSON.stringify("development")
+              }
+          })
+          //new webpack.optimize.DedupePlugin(),
+          //new webpack.optimize.UglifyJsPlugin()
+        );
+
+
+        return gulp.src(src.jsMain)
+          .pipe(webpackStream(conf))
+          .pipe(gulp.dest(src.dist));
+    }
 }
 
 gulp.task('webpack:dev', dev(webpackConf));
 function dev(conf){
     return function(){
-        conf = _.clone(conf);
-        conf.devtool = 'eval';
+        conf = R.clone(conf);
+        conf.devtool = 'source-map';
         conf.debug = true;
         var port = conf.port || 3000;
-        var host = 'localhost';
+        var host = '0.0.0.0';
 
         // Start a webpack-dev-server
         new WebpackDevServer(webpack(conf), {

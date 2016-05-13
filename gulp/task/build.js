@@ -8,3 +8,12 @@ gulp.task('build', function(callback){
       callback
     );
 });
+
+
+gulp.task('build-dev', function(callback){
+    runSequence(
+      ['clean'],
+      'webpack:build-dev',
+      callback
+    );
+});

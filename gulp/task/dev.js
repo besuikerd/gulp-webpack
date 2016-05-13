@@ -2,10 +2,10 @@ var gulp = require('gulp');
 var argv = require('yargs').argv;
 var webpackDev = require('./webpack').dev;
 var webpackConf = require('../conf/webpack');
-var _ = require('lodash');
+var R = require('ramda');
 
 gulp.task('dev', function(callback){
-    var conf = _.clone(webpackConf);
+    var conf = R.clone(webpackConf);
     var port = argv.p || argv.port;
     if(port && typeof port == 'number'){
         conf.port = port;
