@@ -1,0 +1,10 @@
+var _user$project$Components_HelloWorld$helloWorld = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('mt-h2')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html$text('Hello World!')
+		]));

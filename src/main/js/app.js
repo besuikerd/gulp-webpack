@@ -1,4 +1,6 @@
-require('./globals');
-require('../styles/style.scss');
+import 'bootstrap';
+import '../styles/style.scss';
+import Main from '../elm/Main.elm';
 
-document.getElementById('content').innerHTML = "Hello world!";
+const container = document.getElementById('content')
+Main.Main.embed(container);

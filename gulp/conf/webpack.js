@@ -33,6 +33,13 @@ module.exports = {
             {test: /\.less$/i, loader: ExtractTextPlugin.extract('style-loader', ['css','less'])},
             {test: /\.json$/, loader: 'json-loader'},
 
+            //elm loader
+            {
+              test: /\.elm$/,
+              exclude: [/elm-stuff/, /node_modules/],
+              loader: 'elm-webpack'
+            },
+
             //bootstrap assets
             {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
 
