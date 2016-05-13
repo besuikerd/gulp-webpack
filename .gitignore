@@ -7,3 +7,6 @@ dist/
 
 #Intellij
 .idea/
+
+#Elm
+elm-stuff/
