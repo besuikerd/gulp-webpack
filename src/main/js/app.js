@@ -1,6 +1,6 @@
-import 'bootstrap';
-import '../styles/style.scss';
-import Main from '../elm/Main.elm';
+import Elm from '../elm/Main.elm';
 
-const container = document.getElementById('content')
-Main.Main.embed(container);
+import '../styles/style.scss';
+
+const container = document.getElementById('main')
+Elm.Main.embed(container);

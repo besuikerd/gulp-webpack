@@ -1,6 +1,8 @@
 import Html exposing (..)
-import Components.HelloWorld exposing (helloWorld)
 
-main = div [] [
-    helloWorld
-  ]
+main : Html a
+main =
+  div
+    []
+    [ text "Hello World!"
+    ]
